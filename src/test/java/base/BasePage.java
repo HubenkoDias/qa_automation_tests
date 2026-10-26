@@ -30,8 +30,15 @@ public abstract class BasePage {
         element.sendKeys(text);
     }
 
+    protected void waitForInvisible(By locator) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
     protected void waitForUrlContains (String part) {
         wait.until(ExpectedConditions.urlContains(part));
+    }
+    protected void waitForUrlNotContains(String part) {
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains(part)));
     }
 
     protected String getText(By locator) {
@@ -49,5 +56,8 @@ public abstract class BasePage {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block: 'center', behavior: 'instant'});", element);
         element.click();
+    }
+    protected void waitForUrlMatches(String regex) {
+        wait.until(ExpectedConditions.urlMatches(regex));
     }
 }

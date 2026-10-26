@@ -4,7 +4,7 @@ import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class PublicPage extends BasePage {
+public class PublicPage extends MenuPage {
 
     private static final By HEADING = By.tagName("h1");
 

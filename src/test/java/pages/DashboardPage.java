@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.TestConfig;
 
-public class DashboardPage extends BasePage {
+public class DashboardPage extends MenuPage {
 
     public DashboardPage(WebDriver driver) {
         super(driver);
@@ -17,8 +17,8 @@ public class DashboardPage extends BasePage {
     private static final By BIO = By.cssSelector("textarea");
     private static final By YEARS_EXP = By.cssSelector("input[type='number'][max='50']");
     private static final By SAVE_PROFILE = By.xpath("//button[normalize-space()='Save profile']");
-    private static final By SAVED_BUTTON =
-            By.xpath("//button[contains(normalize-space(), '✓ Saved')]");
+    private static final By SAVED_BUTTON = By.xpath("//button[contains(normalize-space(), '✓ Saved')]");
+    private static final By JOBS_LINK = By.cssSelector("a[href='/jobs']");
 
 
     public String getHeadingText() {
@@ -46,6 +46,16 @@ public class DashboardPage extends BasePage {
         driver.navigate().refresh();
         waitForVisible(BIO);
         return this;
+    }
+
+    public DashboardPage setYearsExp(String years) {
+        type(YEARS_EXP, years);
+        return this;
+    }
+
+
+    public String getYearsExpValue() {
+        return getValue(YEARS_EXP);
     }
 
     public String getBioValue() {

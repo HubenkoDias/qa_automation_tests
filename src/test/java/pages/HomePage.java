@@ -5,10 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.TestConfig;
 
-public class HomePage extends BasePage {
+public class HomePage extends MenuPage {
     private static final By SPECIALISTS_LINK = By.cssSelector("a[href='/browse/specialists']");
     private static final By COMPANIES_LINK = By.cssSelector("a[href='/browse/companies']");
-    private static final By JOBS_LINK = By.cssSelector("a[href='/jobs']");
     private static final By INSIGHTS_LINK = By.cssSelector("a[href='/insights']");
 
     public HomePage(WebDriver driver) {
@@ -32,21 +31,10 @@ public class HomePage extends BasePage {
         return new CompaniesPage(driver);
     }
 
-    public JobsPage openJobs() {
-        click(JOBS_LINK);
-        waitForUrlContains("/jobs");
-        return new JobsPage(driver);
-    }
-
     public InsightsPage openInsights () {
         click(INSIGHTS_LINK);
         waitForUrlContains("/insights");
         return new InsightsPage(driver);
     }
-    public PublicPage openMenuItem(String path) {
-        By link = By.cssSelector("a[href='" + path + "']");
-        click(link);
-        waitForUrlContains(path);
-        return new PublicPage(driver);
-    }
+
 }
