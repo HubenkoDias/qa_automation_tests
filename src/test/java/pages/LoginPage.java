@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import utils.TestConfig;
 import utils.TestUser;
 
-public class LoginPage extends BasePage {
+public class LoginPage extends MenuPage {
 
     private static final By EMAIL_FIELD = By.cssSelector("input[type='email']");
     private static final By PASSWORD_FIELD = By.cssSelector("input[type='password']");

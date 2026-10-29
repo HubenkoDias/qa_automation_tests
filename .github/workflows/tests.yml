@@ -30,6 +30,8 @@ jobs:
             HHUB_ADMIN_PASSWORD: ${{ secrets.HHUB_ADMIN_PASSWORD }}
             HHUB_WRONG_EMAIL: ${{ secrets.HHUB_WRONG_EMAIL }}
             HHUB_WRONG_PASWWORD: ${{ secrets.HHUB_WRONG_PASWWORD }}
+            HHUB_SUPABASE_URL: ${{ secrets.HHUB_SUPABASE_URL }}
+            HHUB_SUPABASE_ANON_KEY: ${{ secrets.HHUB_SUPABASE_ANON_KEY }}
 
 
       - name: Save report
