@@ -1,6 +1,5 @@
 package api;
 
-import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.SupabaseApi;
@@ -33,24 +32,14 @@ public class BlogReadApiTest {
         }
     }
 
-    private static int visibleRows(RequestSpecification spec, String id) {
-        return given().spec(spec)
-                .when()
-                    .get("/rest/v1/blog_posts?id=eq." + id + "&select=id")
-                .then()
-                    .statusCode(200)
-                    .log().ifValidationFails()
-                    .extract().jsonPath().getList("id").size();
-    }
-
     @Test
     public void draftIsVisibleToAdminButHiddenFromAnonymous() {
         String adminToken = SupabaseApi.signIn(TestUser.ADMIN);
         String title = "Autotest draft " + System.currentTimeMillis();
         String id = SupabaseApi.createDraft(adminToken, title);
         try {
-            int adminSees = visibleRows(SupabaseSpecs.forUser(adminToken), id);
-            int anonSees = visibleRows(SupabaseSpecs.anon(), id);
+            int adminSees = SupabaseApi.visibleRows(SupabaseSpecs.forUser(adminToken), id);
+            int anonSees = SupabaseApi.visibleRows(SupabaseSpecs.anon(), id);
             Assert.assertEquals(adminSees, 1, "Admin should see own draft");
             Assert.assertEquals(anonSees, 0, "Anonymous must not see a draft");
         }

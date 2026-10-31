@@ -1,5 +1,6 @@
 package utils;
 
+import io.restassured.specification.RequestSpecification;
 import model.NewBlogPost;
 
 import static io.restassured.RestAssured.requestSpecification;
@@ -72,5 +73,24 @@ public final class SupabaseApi {
                 .log().ifValidationFails()
                 .statusCode(anyOf(is(401), is(403)))
                 .body("code", equalTo("42501"));
+    }
+
+    public static int visibleRows(RequestSpecification spec, String id) {
+        return given().spec(spec)
+                .when()
+                    .get("/rest/v1/blog_posts?id=eq." + id + "&select=id")
+                .then()
+                    .statusCode(200)
+                    .log().ifValidationFails()
+                    .extract().jsonPath().getList("id").size();
+    }
+    public static void publishPost(String bearer, String id) {
+        given().spec(SupabaseSpecs.forUser(bearer))
+                .header("Prefer", "return=representation")
+                .body(Map.of("published", true))
+                .when().patch("/rest/v1/blog_posts?id=eq." + id)
+                .then().log().ifValidationFails()
+                .statusCode(200)
+                .body("size()", is(1));
     }
 }
